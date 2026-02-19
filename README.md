@@ -7,6 +7,9 @@ This project simulates a production-style data engineering pipeline transforming
 
 # 🏗 Architecture Overview
 
+![Sakila Architecture](images/sakila_architecture.png)
+
+
 Pipeline Flow:
 
 OLTP (MySQL Sakila)
