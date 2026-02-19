@@ -1,148 +1,113 @@
-#  Sakila Analytics Warehouse  
-OLTP → ETL → OLAP → BI Reporting
+# 📊 Sakila Data Warehouse & Analytics Engineering Project
 
-This project simulates a production-style data engineering pipeline transforming a normalized OLTP database (Sakila) into an analytical warehouse optimized for KPI reporting and dashboard analytics.
+This project transforms the traditional Sakila DVD Rental OLTP database into a fully structured Data Warehouse with dimensional modeling, ETL pipelines, subject-oriented data marts, and executive-ready dashboards.
+
+Instead of querying raw transactional tables, I designed and implemented a scalable warehouse architecture that separates operational data from analytical workloads — mirroring real-world enterprise data systems.
 
 ---
 
-# 🏗 Architecture Overview
+## 🏗 Architecture Overview
 
 ![Sakila Architecture](images/sakila_architecture.png)
 
 
-Pipeline Flow:
+The system follows a layered data architecture:
 
-OLTP (MySQL Sakila)
-→ SQL Extraction Queries
-→ Python ETL Scripts
-→ MongoDB Staging Layer
-→ Snowflake-Style Analytical Warehouse
-→ Power BI Dashboard Layer
+• Normalized OLTP source database  
+• Dimensional Star Schema (Fact & Dimension tables)  
+• Transaction-safe ETL batch pipeline  
+• Finance Data Mart (CFO-level reporting)  
+• Sales & Inventory Data Mart (Operational analytics)  
+• Power BI dashboards for business decision-making  
 
-The system separates transactional data from analytical workloads to simulate real-world data platform design.
-
----
-
-# 📐 Data Modeling Strategy
-
-## Source System
-Normalized OLTP schema (Sakila)
-
-## Target System
-Snowflake-style OLAP warehouse
-
-### Fact Table
-- orders_fact
-
-### Dimensions
-- dim_customer
-- dim_film
-- dim_store
-- dim_staff
-- dim_date
-
-Model designed for:
-
-- Time-based trend analysis
-- Store-level performance tracking
-- Staff productivity analysis
-- Film revenue ranking
-
-An ERD diagram was created to validate table relationships and enforce referential integrity during transformation.
+All transformations are handled using structured T-SQL ETL processes with identity reseeding, transactional control, and parameterized stored procedures.
 
 ---
 
-# 🔄 ETL Implementation
+## 🔄 ETL Pipeline
 
-### SQL
-- Extracted transactional data
-- Flattened multi-table joins
-- Built dimensional transformation queries
+The ETL process:
 
-### Python
-- Simulated ETL workflow
-- Managed transformation logic
-- Structured fact + dimension loading
+• Clears and reloads dimension and fact tables  
+• Resets identity seeds for consistency  
+• Aggregates transactional data into analytics-ready fact tables  
+• Loads subject-oriented data marts with indexed structures  
+• Supports parameterized procedures for dynamic filtering (Year, Quarter, Date Range, Store, Transaction Type)
 
-### MongoDB
-- Used as intermediate staging layer
-- Organized transformed records prior to warehouse load
-- Simulated flexible storage in hybrid environments
+The design prioritizes data integrity, performance, and scalability.
 
 ---
 
-# 📈 Analytical Query Optimization
+## 💰 Finance Data Mart (Executive View)
 
-Warehouse optimized for aggregation-heavy workloads.
+Designed to support high-level financial analysis:
 
-Example:
-
-```sql
-SELECT d.year, d.month, SUM(f.amount) AS total_revenue
-FROM orders_fact f
-JOIN dim_date d ON f.date_id = d.date_id
-GROUP BY d.year, d.month
-ORDER BY d.year, d.month;
-```
-
-KPIs optimized for:
-
-- Monthly Revenue
-- Revenue by Store
-- Revenue by Film
-- Staff Performance
+• Revenue trends by Year, Quarter, Month  
+• Late fee tracking  
+• Geographic revenue distribution  
+• Store performance comparisons  
+• Unique customer aggregation  
+• Transaction volume analysis  
 
 ---
 
-# 📊 BI Layer (Power BI)
+## 🎬 Sales & Inventory Data Mart (Operational View)
 
-Dashboards built on top of the warehouse:
+Designed to support product and customer analytics:
 
-- Revenue Overview
-- Store Performance
-- Film Insights
-- Staff Productivity
-
-This simulates executive-level reporting using structured analytical data.
-
----
-
-# 🛠 Skills Demonstrated
-
-### Data Engineering
-- OLTP → OLAP migration
-- Snowflake schema modeling
-- Fact & dimension design
-- ETL pipeline simulation
-- Referential integrity validation
-
-### Query Engineering
-- Analytical SQL
-- Aggregation optimization
-- Join reduction strategies
-- KPI query tuning
-
-### Hybrid Data Systems
-- SQL + MongoDB integration
-- Structured + semi-structured data handling
-- Staging layer design
-
-### BI Integration
-- Power BI dashboard modeling
-- KPI metric structuring
-- Reporting layer abstraction
+• Top performing films  
+• Units transacted by store and date  
+• Customer behavior analysis  
+• Rental return rate calculations  
+• Active vs inactive customer segmentation  
 
 ---
 
-# 🎯 Engineering Principles Applied
+## 📈 Dashboards
 
-- Separation of transactional and analytical workloads
-- Dimensional modeling best practices
-- Surrogate key implementation
-- Performance-first query design
-- Architecture-driven development
+Two Power BI dashboards were built on top of the data marts:
+
+1. Financial Performance Dashboard
+   - Revenue growth visualization
+   - KPI cards (Revenue, Transactions, Unique Customers)
+   - Geographic revenue analysis
+   - Late fee breakdown
+   - Monthly transaction distribution
+
+2. Operational Dashboard
+   - Total customers
+   - Rental transactions
+   - Top customers
+   - Store-level performance insights
+
+All dashboards are powered by warehouse-level aggregation — not raw OLTP queries.
 
 ---
+
+## 🛠 Tech Stack
+
+• SQL Server  
+• T-SQL (Stored Procedures, Views, Indexing)  
+• Dimensional Modeling (Star Schema)  
+• ETL Engineering  
+• Power BI  
+
+---
+
+## 🎯 What This Demonstrates
+
+This project showcases:
+
+• End-to-end Data Warehouse design  
+• ETL pipeline development  
+• Star schema modeling  
+• Performance-aware indexing  
+• Analytical stored procedure design  
+• Business-focused dashboard development  
+
+It reflects how raw transactional data can be transformed into decision-ready insights using structured data engineering practices.
+
+
 
 ## 👤 Author
 
