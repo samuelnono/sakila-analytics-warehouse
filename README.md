@@ -1,208 +1,143 @@
-# Sakila Analytics Warehouse  
-**OLTP → OLAP Migration | Snowflake Schema Modeling | KPI Optimization**
+#  Sakila Analytics Warehouse  
+OLTP → ETL → OLAP → BI Reporting
+
+This project simulates a production-style data engineering pipeline transforming a normalized OLTP database (Sakila) into an analytical warehouse optimized for KPI reporting and dashboard analytics.
 
 ---
 
-## 🌍 Project Overview
+# 🏗 Architecture Overview
 
-This project transforms the normalized **Sakila OLTP database** into a **Snowflake-style analytical warehouse** optimized for reporting and KPI analysis.
+Pipeline Flow:
 
-The objective was to simulate a production-grade data engineering workflow:
+OLTP (MySQL Sakila)
+→ SQL Extraction Queries
+→ Python ETL Scripts
+→ MongoDB Staging Layer
+→ Snowflake-Style Analytical Warehouse
+→ Power BI Dashboard Layer
 
-- Extract transactional data  
-- Design dimensional model  
-- Build optimized fact table  
-- Validate referential integrity  
-- Optimize aggregation queries  
-- Support BI dashboard analytics  
-
-This project demonstrates how operational systems are converted into structured analytical platforms for decision-making.
+The system separates transactional data from analytical workloads to simulate real-world data platform design.
 
 ---
 
-## 🏗 Architecture Design
+# 📐 Data Modeling Strategy
 
-### Source System  
+## Source System
 Normalized OLTP schema (Sakila)
 
-### Target System  
+## Target System
 Snowflake-style OLAP warehouse
 
-### Core Components
+### Fact Table
+- orders_fact
 
-**Fact Table**
-- `orders_fact`
+### Dimensions
+- dim_customer
+- dim_film
+- dim_store
+- dim_staff
+- dim_date
 
-**Dimension Tables**
-- `dim_customer`
-- `dim_film`
-- `dim_store`
-- `dim_staff`
-- `dim_date`
+Model designed for:
 
----
+- Time-based trend analysis
+- Store-level performance tracking
+- Staff productivity analysis
+- Film revenue ranking
 
-### 🎯 Why Snowflake Schema?
-
-The Snowflake schema was chosen to:
-
-- Reduce redundancy
-- Improve dimensional clarity
-- Support hierarchical drill-down queries
-- Enable scalable KPI aggregation
-- Reflect enterprise BI warehouse patterns
+An ERD diagram was created to validate table relationships and enforce referential integrity during transformation.
 
 ---
 
-## 🔄 OLTP → OLAP Transformation
+# 🔄 ETL Implementation
 
-### 1️⃣ Transactional Flattening
+### SQL
+- Extracted transactional data
+- Flattened multi-table joins
+- Built dimensional transformation queries
 
-Normalized transactional joins were transformed into measurable analytical events.
+### Python
+- Simulated ETL workflow
+- Managed transformation logic
+- Structured fact + dimension loading
 
-Example transformation:
-
-Payments + Customer + Film + Store  
-→ Consolidated into `orders_fact`
-
-This reduces repeated joins during analytical queries.
-
----
-
-### 2️⃣ Fact Table Modeling
-
-`orders_fact` includes:
-
-- `payment_id`
-- `customer_id`
-- `staff_id`
-- `store_id`
-- `film_id`
-- `date_id`
-- `amount`
-
-Optimized for:
-
-- Revenue aggregation  
-- Trend analysis  
-- Store-level performance tracking  
-- Staff productivity metrics  
+### MongoDB
+- Used as intermediate staging layer
+- Organized transformed records prior to warehouse load
+- Simulated flexible storage in hybrid environments
 
 ---
 
-### 3️⃣ Referential Integrity Validation
+# 📈 Analytical Query Optimization
 
-Simulated ETL validation steps:
+Warehouse optimized for aggregation-heavy workloads.
 
-- Verified dimension key consistency  
-- Checked for orphan fact records  
-- Enforced surrogate key alignment  
-- Validated foreign key relationships  
-
-These steps mirror real-world data quality enforcement in production pipelines.
-
----
-
-## 📊 Analytical Query Layer
-
-### Example: Revenue by Month
+Example:
 
 ```sql
-SELECT d.year,
-       d.month,
-       SUM(f.amount) AS total_revenue
+SELECT d.year, d.month, SUM(f.amount) AS total_revenue
 FROM orders_fact f
 JOIN dim_date d ON f.date_id = d.date_id
 GROUP BY d.year, d.month
 ORDER BY d.year, d.month;
 ```
 
----
+KPIs optimized for:
 
-### Example: Revenue by Store
-
-```sql
-SELECT s.store_name,
-       SUM(f.amount) AS revenue
-FROM orders_fact f
-JOIN dim_store s ON f.store_id = s.store_id
-GROUP BY s.store_name
-ORDER BY revenue DESC;
-```
+- Monthly Revenue
+- Revenue by Store
+- Revenue by Film
+- Staff Performance
 
 ---
 
-## ⚡ Performance Optimization Strategy
+# 📊 BI Layer (Power BI)
 
-Optimization focused on:
+Dashboards built on top of the warehouse:
 
-- Fact table aggregation design
-- Reduced join complexity
-- Dimension indexing
-- Query structure efficiency
+- Revenue Overview
+- Store Performance
+- Film Insights
+- Staff Productivity
 
-Compared to OLTP queries:
-
-| Metric | OLTP | OLAP |
-|--------|------|------|
-| Join Depth | High | Reduced |
-| Aggregation Speed | Slower | Faster |
-| Reporting Scalability | Limited | Scales for BI |
-| Query Readability | Complex | Structured |
+This simulates executive-level reporting using structured analytical data.
 
 ---
 
-## 🧠 Engineering Focus
+# 🛠 Skills Demonstrated
 
 ### Data Engineering
+- OLTP → OLAP migration
+- Snowflake schema modeling
+- Fact & dimension design
+- ETL pipeline simulation
+- Referential integrity validation
 
-- ETL simulation
-- Dimensional modeling
-- Snowflake schema design
-- Fact table optimization
-- KPI aggregation
+### Query Engineering
+- Analytical SQL
+- Aggregation optimization
+- Join reduction strategies
+- KPI query tuning
 
-### Analytical Systems
+### Hybrid Data Systems
+- SQL + MongoDB integration
+- Structured + semi-structured data handling
+- Staging layer design
 
-- Revenue analysis
-- Store performance metrics
-- Film ranking insights
-- Staff productivity reporting
-
----
-
-## 📈 BI Dashboard Integration (Conceptual Layer)
-
-Dashboards designed on top of the warehouse:
-
-- Revenue Overview  
-- Store Performance  
-- Film Insights  
-- Staff KPIs  
-
-This simulates executive-level reporting environments.
+### BI Integration
+- Power BI dashboard modeling
+- KPI metric structuring
+- Reporting layer abstraction
 
 ---
 
-## 🔍 Architectural Reasoning
+# 🎯 Engineering Principles Applied
 
-This warehouse design:
-
-- Separates operational and analytical workloads
-- Optimizes for aggregation-heavy reporting
-- Reduces query complexity
-- Improves performance under scale
-- Reflects enterprise BI architecture patterns
-
----
-
-## 🚀 Future Enhancements
-
-- Add incremental ETL simulation
-- Introduce partitioning strategies
-- Implement materialized view optimization
-- Add indexing comparison benchmarks
-- Connect to live BI dashboard deployment
+- Separation of transactional and analytical workloads
+- Dimensional modeling best practices
+- Surrogate key implementation
+- Performance-first query design
+- Architecture-driven development
 
 ---
 
@@ -211,4 +146,4 @@ This warehouse design:
 Samuel Nono  
 M.S. Data Science  
 
-Data Engineering | Distributed Systems | Applied AI  
+Data Engineering | Distributed Systems | Applied AI
