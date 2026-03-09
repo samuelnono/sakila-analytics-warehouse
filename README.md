@@ -1,4 +1,4 @@
-# 📊 Sakila Data Warehouse & Analytics Engineering Project
+#  Sakila Data Warehouse & Analytics Engineering Project
 
 This project transforms the traditional Sakila DVD Rental OLTP database into a fully structured Data Warehouse with dimensional modeling, ETL pipelines, subject-oriented data marts, and executive-ready dashboards.
 
@@ -6,7 +6,7 @@ Instead of querying raw transactional tables, I designed and implemented a scala
 
 ---
 
-## 🏗 Architecture Overview
+##  Architecture Overview
 
 ![Sakila Architecture](images/sakila_architecture.png)
 
@@ -24,7 +24,7 @@ All transformations are handled using structured T-SQL ETL processes with identi
 
 ---
 
-## 🔄 ETL Pipeline
+##  ETL Pipeline
 
 The ETL process:
 
@@ -38,7 +38,7 @@ The design prioritizes data integrity, performance, and scalability.
 
 ---
 
-## 💰 Finance Data Mart (Executive View)
+##  Finance Data Mart (Executive View)
 
 Designed to support high-level financial analysis:
 
@@ -51,7 +51,7 @@ Designed to support high-level financial analysis:
 
 ---
 
-## 🎬 Sales & Inventory Data Mart (Operational View)
+##  Sales & Inventory Data Mart (Operational View)
 
 Designed to support product and customer analytics:
 
@@ -63,7 +63,7 @@ Designed to support product and customer analytics:
 
 ---
 
-## 📈 Dashboards
+##  Dashboards
 
 Two Power BI dashboards were built on top of the data marts:
 
@@ -84,7 +84,7 @@ All dashboards are powered by warehouse-level aggregation — not raw OLTP queri
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 • SQL Server  
 • T-SQL (Stored Procedures, Views, Indexing)  
@@ -94,7 +94,7 @@ All dashboards are powered by warehouse-level aggregation — not raw OLTP queri
 
 ---
 
-## 🎯 What This Demonstrates
+##  What This Demonstrates
 
 This project showcases:
 
@@ -109,7 +109,7 @@ It reflects how raw transactional data can be transformed into decision-ready in
 
 
 
-## 👤 Author
+##  Author
 
 Samuel Nono  
 M.S. Data Science  
